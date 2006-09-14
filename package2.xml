@@ -31,7 +31,7 @@
  </stability>
  <license uri="http://php.net/license">PHP License</license>
  <notes>
-  Rework rules. Add Base, Regex, Alpha, Numeric, NumericRange and AlphaNumeric.
+  Rework rules. Add Base, Regex, Alpha, Numeric, NumericRange, LengthRange and AlphaNumeric.
  </notes>
  <contents>
   <dir baseinstalldir="/Structures/" name="/">
@@ -51,6 +51,9 @@
     <tasks:replace from="@version@" to="version" type="package-info" />
    </file>
    <file baseinstalldir="/Structures/" name="Form/Rule/NumericRange.php" role="php">
+    <tasks:replace from="@version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/Structures/" name="Form/Rule/LengthRange.php" role="php">
     <tasks:replace from="@version@" to="version" type="package-info" />
    </file>
    <file baseinstalldir="/Structures/" name="Form/Rule/AlphaNumeric.php" role="php">

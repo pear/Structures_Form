@@ -462,6 +462,10 @@ class Structures_Form {
                                     'Structures_Form_Rule_NumericRange',
                                     'Structures/Form/Rule/NumericRange.php'
                                     ),                              
+                              array('lengthrange',
+                                    'Structures_Form_Rule_LengthRange',
+                                    'Structures/Form/Rule/LengthRange.php'
+                                    ),                              
                               array('alphanumeric',
                                     'Structures_Form_Rule_AlphaNumeric',
                                     'Structures/Form/Rule/AlphaNumeric.php'

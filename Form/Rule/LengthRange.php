@@ -1,7 +1,7 @@
 <?php
 /**
  * A rule designed to be used with Structures_Form. This rule makes sure that
- * an element has a numeric value between two other values (inclusive).
+ * an element has a string length between a lower and upper limit.
  *
  * One of a max or min must be supplied. If the max is NULL, then there will be
  * no max. If the min is NULL, then there will be no min. But both cannot be
@@ -19,8 +19,8 @@
  * @version   @version@
  * @copyright Copyright 2006 Scott Mattocks
  */
-require_once 'Structures/Form/Rule/Numeric.php';
-class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
+require_once 'Structures/Form/Rule/Base.php';
+class Structures_Form_Rule_LengthRange extends Structures_Form_Rule_Base {
 
     /**
      * The error message to be returned if the element does not validate.
@@ -31,7 +31,7 @@ class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
      * @access protected
      * @var    string
      */
-    protected $errorMessage = '{elementName} must be a number {min}{and}{max}.';
+    protected $errorMessage = '{elementName} must be {min}{and}{max} long.';
     
     /**
      * The minimum value for the element.
@@ -75,7 +75,7 @@ class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
         if (!is_null && !is_numeric($min)) {
             // No good. Throw an exception!
             require_once 'Structures/Form/Exception.php';
-            throw new Structures_Form_Excpetion('Invalid value for minimum numeric range: ' . $min);
+            throw new Structures_Form_Excpetion('Invalid value for minimum length range: ' . $min);
         } else {
             // Set the min.
             $this->min = $min;
@@ -85,7 +85,7 @@ class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
         if (!is_null && !is_numeric($max)) {
             // No good. Throw an exception!
             require_once 'Structures/Form/Exception.php';
-            throw new Structures_Form_Excpetion('Invalid value for maximum numeric range: ' . $max);
+            throw new Structures_Form_Excpetion('Invalid value for maximum length range: ' . $max);
         } else {
             // Set the max.
             $this->max = $max;
@@ -103,7 +103,7 @@ class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
             // If there is no lower limit replace the tag with nothing
             $this->addSubstitution('{min}', '');
         } else {
-            $this->addSubstitution('{min}', 'greater than or equal to ' . $this->min);
+            $this->addSubstitution('{min}', 'at least ' . $this->min . ' characters');
         }
 
         // Add the max to the substitutions array.
@@ -111,7 +111,7 @@ class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
             // If there is no upper limit replace the tag with nothing
             $this->addSubstitution('{max}', '');
         } else {
-            $this->addSubstitution('{max}', 'less than or equal to ' . $this->max);
+            $this->addSubstitution('{max}', 'no more than ' . $this->max . ' characters');
         }
 
         // If there is both a lower and upper limit, add the word and.
@@ -131,25 +131,19 @@ class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
      */
     public function validate(Structures_Form_ElementInterface $element)
     {
-        // First check that the value is a number by calling the parent 
-        // validate method.
-        if (($retVal = parent::validate($element)) !== true) {
-            return $retVal;
-        }       
-
-        // Grab the value (if it is null or an empty string return true).
-        if (strlen($value = $element->getValue()) == 0) {
+        // Grab the value (if it is null return true).
+        if (is_null($value = $element->getValue())) {
             return true;
         }
 
         // Make sure the value is greater than or equal to the lower limit.
-        if (!is_null($this->min) && $value < $this->min) {
+        if (!is_null($this->min) && strlen($value) < $this->min) {
             // The validation failed. Create an error message.
             return $this->generateErrorString($element);
         }
-
+        
         // Make sure the value is less than or equal to the upper limit.
-        if (!is_null($this->max) && $value > $this->max) {
+        if (!is_null($this->max) && strlen($value) > $this->max) {
             // The validation failed. Create an error message.
             return $this->generateErrorString($element);
         }
