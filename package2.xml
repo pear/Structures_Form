@@ -13,17 +13,17 @@
   clicks the submit button. The difference is how the user values are
   submitted and stored. HTML forms submit data in an HTTP request using either
   GET or POST. PHP-GTK 2 forms call a callback which is then responsible for
-  retrieving the values.&apos;</description>
+  retrieving the values.</description>
  <lead>
   <name>Scott Mattocks</name>
   <user>scottmattocks</user>
   <email>scottmattocks@php.net</email>
   <active>yes</active>
  </lead>
- <date>2006-06-23</date>
+ <date>2006-09-13</date>
  <version>
-  <release>0.7.0devel</release>
-  <api>0.7.0devel</api>
+  <release>0.8.0devel</release>
+  <api>0.8.0devel</api>
  </version>
  <stability>
   <release>devel</release>
@@ -31,16 +31,33 @@
  </stability>
  <license uri="http://php.net/license">PHP License</license>
  <notes>
-  Add addEventHandler() method to ElementInterface.
+  Rework rules. Add Base, Regex, Alpha, Numeric, and AlphaNumeric.
  </notes>
  <contents>
   <dir baseinstalldir="/Structures/" name="/">
+   <file baseinstalldir="/Structures/" name="Form/Rule/Base.php" role="php">
+    <tasks:replace from="@version@" to="version" type="package-info" />
+   </file>
    <file baseinstalldir="/Structures/" name="Form/Rule/Required.php" role="php">
     <tasks:replace from="@version@" to="version" type="package-info" />
    </file>
+   <file baseinstalldir="/Structures/" name="Form/Rule/Regex.php" role="php">
+    <tasks:replace from="@version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/Structures/" name="Form/Rule/Alpha.php" role="php">
+    <tasks:replace from="@version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/Structures/" name="Form/Rule/Numeric.php" role="php">
+    <tasks:replace from="@version@" to="version" type="package-info" />
+   </file>
+   <file baseinstalldir="/Structures/" name="Form/Rule/AlphaNumeric.php" role="php">
+    <tasks:replace from="@version@" to="version" type="package-info" />
+   </file>
+   <!--
    <file baseinstalldir="/Structures/" name="Form/test/Structures_FormTest.php" role="test">
     <tasks:replace from="@version@" to="version" type="package-info" />
    </file>
+   -->
    <file baseinstalldir="/Structures/" name="Form/ElementInterface.php" role="php">
     <tasks:replace from="@version@" to="version" type="package-info" />
    </file>
@@ -186,6 +203,21 @@
    <license uri="http://php.net/license">PHP License</license>
    <notes>
     Add addEventHandler() method to ElementInterface.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.8.0devel</release>
+    <api>0.8.0devel</api>
+   </version>
+   <stability>
+    <release>devel</release>
+    <api>devel</api>
+   </stability>
+   <date>2006-09-13</date>
+   <license uri="http://php.net/license">PHP License</license>
+   <notes>
+    Rework rules. Add Base, Regex, Alpha, Numeric, and AlphaNumeric.
    </notes>
   </release>
  </changelog>

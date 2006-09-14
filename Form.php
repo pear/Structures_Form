@@ -445,6 +445,22 @@ class Structures_Form {
                               array(self::REQUIRED_RULE,
                                     'Structures_Form_Rule_Required',
                                     'Structures/Form/Rule/Required.php'
+                                    ),
+                              array('regex',
+                                    'Structures_Form_Rule_Regex',
+                                    'Structures/Form/Rule/Regex.php'
+                                    ),                              
+                              array('alpha',
+                                    'Structures_Form_Rule_Alpha',
+                                    'Structures/Form/Rule/Alpha.php'
+                                    ),                              
+                              array('numeric',
+                                    'Structures_Form_Rule_Numeric',
+                                    'Structures/Form/Rule/Numeric.php'
+                                    ),                              
+                              array('alphanumeric',
+                                    'Structures_Form_Rule_AlphaNumeric',
+                                    'Structures/Form/Rule/AlphaNumeric.php'
                                     )
                               );
 
@@ -1648,7 +1664,7 @@ class Structures_Form {
             // Check to see if the rule is registered under a different name.
             foreach ($this->registeredRules as $rule) {
                 // Use a case insensitive comparison.
-                if (stricmp($rule['class'], $class) === 0) {
+                if (strcasecmp($rule['class'], $class) === 0) {
                     return true;
                 }
             }

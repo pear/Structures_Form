@@ -1,10 +1,9 @@
 <?php
 /**
  * A rule designed to be used with Structures_Form. This rule makes sure that
- * an element has some sort of value.
+ * an element has a value that matches the given regular expression.
  *
- * The only validation done is to make sure that the value of the element is 
- * not empty.
+ * This class uses Perl compatible regular expressions.
  *
  * This class extends Structures_Form_Rule_Base.
  * This class implement Structures_Form_RuleInterface.
@@ -16,7 +15,7 @@
  * @copyright Copyright 2006 Scott Mattocks
  */
 require_once 'Structures/Form/Rule/Base.php';
-class Structures_Form_Rule_Required extends Structures_Form_Rule_Base {
+class Structures_Form_Rule_Regex extends Structures_Form_Rule_Base {
 
     /**
      * The error message to be returned if the element does not validate.
@@ -27,23 +26,57 @@ class Structures_Form_Rule_Required extends Structures_Form_Rule_Base {
      * @access protected
      * @var    string
      */
-    protected $errorMessage = '{elementName} is required.';
+    protected $errorMessage = '{elementName} must match {regex}.';
     
     /**
-     * Constructor. Just calls the parent constructor.
+     * The regular expression to validate against.
+     * 
+     * Must be a PCRE.
+     *
+     * @access protected
+     * @var    string
+     */
+    protected $regex;
+
+    /**
+     * Constructor.
      *
      * This rule does not require any additional arguments, but may accept two
      * optional arguments.
      *
      * @access public
+     * @param  string $regex         A regular expression to validate against.
      * @param  string $errorMessage  Optional error message.
      * @param  array  $substitutions Optional substitution array.
      * @return void
      */
-    public function __construct($errorMessage = null, $substitutions = null)
+    public function __construct($regex, $errorMessage = null,
+                                $substitutions = null
+                                )
     {
-        // Call parent constructor.
+        // Call the parent constructor.
         parent::__construct($errorMessage, $substitutions);
+
+        // Set the regex.
+        $this->setRegex($regex);
+
+        // Add the regex to the substitutions array.
+        $this->addSubstitution('{regex}', $this->regex);
+    }
+
+    /**
+     * Sets the regular expression to be used for validation.
+     *
+     * Must be a PCRE.
+     *
+     * @access public
+     * @param  string $regex The regex for validation.
+     * @return void
+     */
+    public function setRegex($regex)
+    {
+        // Set the regex.
+        $this->regex = $regex;
     }
 
     /**
@@ -57,7 +90,7 @@ class Structures_Form_Rule_Required extends Structures_Form_Rule_Base {
     {
         // Check to see if the elements value is null.
         $value = $element->getValue();
-        if (!empty($value)) {
+        if (preg_match($this->regex, $value)) {
             return true;
         }
 
