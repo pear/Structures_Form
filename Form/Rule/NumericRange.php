@@ -72,7 +72,7 @@ class Structures_Form_Rule_NumericRange extends Structures_Form_Rule_Numeric {
         parent::__construct($errorMessage, $substitutions);
 
         // Check the min value.
-        if (!is_null && !is_numeric($min)) {
+        if (!is_null($min) && !is_numeric($min)) {
             // No good. Throw an exception!
             require_once 'Structures/Form/Exception.php';
             throw new Structures_Form_Excpetion('Invalid value for minimum numeric range: ' . $min);
